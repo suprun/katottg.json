@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Кодифікатор адміністративно-територіальних одиниць та територій територіальних громад України",
+  "description": "Ця схема описує структуру даних мінімальної версії Кодифікатора адміністративно-територіальних одиниць та територій територіальних громад (КАТОТТГ) України.",
+  "type": "object",
+  "required": [
+    "valid_on",
+    "admin_units"
+  ],
+  "properties": {
+    "valid_on": {
+      "type": "string",
+      "format": "date",
+      "description": "Дата випуску або останнього оновлення даних у форматі РРРР-ММ-ДД."
+    },
+    "admin_units": {
+      "type": "array",
+      "description": "Список адміністративних одиниць та територій територіальних громад.",
+      "items": {
+        "type": "object",
+        "required": [
+          "i",
+          "n",
+          "c",
+          "l"
+        ],
+        "properties": {
+          "i": {
+            "type": "string",
+            "description": "Код згідно КАТОТТГ (скорочений 'id').",
+            "pattern": "^UA\\d{17}$"
+          },
+          "n": {
+            "type": "string",
+            "description": "Назва адміністративної одиниці або території територіальної громади (скорочений 'name')."
+          },
+          "c": {
+            "type": "string",
+            "description": "Категорія адміністративної одиниці або території територіальної громади (скорочений 'category').",
+            "enum": ["O", "K", "P", "H", "M", "T", "C", "X", "B"]
+          },
+          "l": {
+            "type": "integer",
+            "description": "Рівень адміністративної одиниці або території територіальної громади в ієрархії КАТОТТГ (скорочений 'level').",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "1": {
+            "type": "string",
+            "description": "Код Першого рівня.",
+            "pattern": "^UA\\d{17}$"
+          },
+          "2": {
+            "type": "string",
+            "description": "Код Другого рівня.",
+            "pattern": "^UA\\d{17}$"
+          },
+          "3": {
+            "type": "string",
+            "description": "Код Третього рівня.",
+            "pattern": "^UA\\d{17}$"
+          },
+          "4": {
+            "type": "string",
+            "description": "Код Четвертого рівня.",
+            "pattern": "^UA\\d{17}$"
+          },
+          "5": {
+            "type": "string",
+            "description": "Код Додаткового рівня.",
+            "pattern": "^UA\\d{17}$"
+          }
+        },
+        "patternProperties": {
+          "^[1-5]$": {
+            "type": "string",
+            "pattern": "^UA\\d{17}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

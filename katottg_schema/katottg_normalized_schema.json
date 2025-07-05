@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "аказ Міністерства розвитку громад та територій України від 02.07.2025 № 1065 «Про внесення змін до Кодифікатора адміністративно-територіальних одиниць та територій територіальних громад",
+  "description": "Ця схема описує структуру нормалізованих даних згідно Кодифікатора адміністративно-територіальних одиниць та територій територіальних громад (КАТОТТГ) України.",
+  "type": "object",
+  "required": [
+    "valid_on",
+    "source",
+    "meta",
+    "admin_units"
+  ],
+  "properties": {
+    "valid_on": {
+      "type": "string",
+      "format": "date",
+      "description": "Дата випуску або останнього оновлення даних у форматі РРРР-ММ-ДД."
+    },
+    "source": {
+      "type": "string",
+      "description": "Джерело даних (наказ або інший документ), на основі якого сформовано кодифікатор."
+    },
+    "meta": {
+      "type": "object",
+      "description": "Метадані, що описують ключі, рівні адміністративно-територіального устрою та категорії одиниць, які використовуються в даних кодифікатора.",
+      "required": [
+        "json_schema",
+        "keys",
+        "level",
+        "category"
+      ],
+      "properties": {
+        "json_schema": {
+          "type": "string",
+          "format": "uri",
+          "description": "Посилання на JSON Schema, яка описує структуру цього файлу даних."
+        },
+        "keys": {
+          "type": "object",
+          "description": "Опис ключів, що використовуються в об'єктах admin_units.",
+          "properties": {
+            "id": { "type": "string" },
+            "parent_id": { "type": "string" },
+            "name": { "type": "string" },
+            "category": { "type": "string" },
+            "level": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "level": {
+          "type": "object",
+          "description": "Опис для кожного адміністративного рівня у КАТОТТГ.",
+          "properties": {
+            "1": { "type": "string" },
+            "2": { "type": "string" },
+            "3": { "type": "string" },
+            "4": { "type": "string" },
+            "5": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "category": {
+          "type": "object",
+          "description": "Опис категорії адміністративно-територіального рівня у КАТОТТГ.",
+          "properties": {
+            "O": { "type": "string" },
+            "K": { "type": "string" },
+            "P": { "type": "string" },
+            "H": { "type": "string" },
+            "M": { "type": "string" },
+            "T": { "type": "string" },
+            "C": { "type": "string" },
+            "X": { "type": "string" },
+            "B": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "admin_units": {
+      "type": "array",
+      "description": "Список адміністративних одиниць та територій територіальних громад.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "category",
+          "level"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Унікальний ідентифікатор адміністративної одиниці або території територіальної громади згідно з КАТОТТГ (код).",
+            "pattern": "^UA\\d{17}$"
+          },
+          "parent_id": {
+            "type": "string",
+            "description": "Код адміністративної одиниці вищого рівня, до складу якої входить дана одиниця згідно КАТОТТГ.",
+            "pattern": "^UA\\d{17}$"
+          },
+          "name": {
+            "type": "string",
+            "description": "Назва адміністративної одиниці або території територіальної громади."
+          },
+          "category": {
+            "type": "string",
+            "description": "Категорія адміністративної одиниці або території територіальної громади.",
+            "enum": ["O", "K", "P", "H", "M", "T", "C", "X", "B"]
+          },
+          "level": {
+            "type": "integer",
+            "description": "Рівень адміністративної одиниці або території територіальної громади в ієрархії КАТОТТГ.",
+            "minimum": 1,
+            "maximum": 5
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
